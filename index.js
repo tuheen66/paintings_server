@@ -32,6 +32,10 @@ async function run() {
       .db("artsCraftDB")
       .collection("arts-craft");
 
+    const subcategoryCollection = client
+      .db("artsCraftDB")
+      .collection("subcategory");
+
     app.get("/arts-craft", async (req, res) => {
       const cursor = artsCraftCollection.find();
       const result = await cursor.toArray();
@@ -42,6 +46,12 @@ async function run() {
       const artsCraft = req.body;
       console.log(artsCraft);
       const result = await artsCraftCollection.insertOne(artsCraft);
+      res.send(result);
+    });
+
+    app.get("/subcategory", async (req, res) => {
+      const cursor = subcategoryCollection.find();
+      const result = await cursor.toArray();
       res.send(result);
     });
 
