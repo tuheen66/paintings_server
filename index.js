@@ -32,7 +32,11 @@ async function run() {
       .db("artsCraftDB")
       .collection("arts-craft");
 
-    
+    app.get("/arts-craft", async (req, res) => {
+      const cursor = artsCraftCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
+    });
 
     app.post("/arts-craft", async (req, res) => {
       const artsCraft = req.body;
