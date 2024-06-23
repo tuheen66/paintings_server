@@ -9,8 +9,6 @@ const port = process.env.PORT || 5000;
 app.use(cors());
 app.use(express.json());
 
-
-
 // const uri =
 //   "mongodb+srv://canvasMaster:4Pj1xQ7yAYBbcCkd@cluster0.1gnzeig.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
@@ -33,14 +31,15 @@ async function run() {
     const artsCraftCollection = client
       .db("artsCraftDB")
       .collection("arts-craft");
-      
 
-app.post('/atrs-craft'), async(req, res)=>{
-    const artsCraft = req.body
-    const result = await artsCraftCollection.insertOne(artsCraft)
-    res.send(result)
-}
+    
 
+    app.post("/arts-craft", async (req, res) => {
+      const artsCraft = req.body;
+      console.log(artsCraft);
+      const result = await artsCraftCollection.insertOne(artsCraft);
+      res.send(result);
+    });
 
     // Send a ping to confirm a successful connection
     await client.db("admin").command({ ping: 1 });
