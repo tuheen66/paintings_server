@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 require("dotenv").config();
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 const app = express();
 const port = process.env.PORT || 5000;
 
@@ -48,6 +48,20 @@ async function run() {
       const result = await artsCraftCollection.insertOne(artsCraft);
       res.send(result);
     });
+
+    app.put('/arts-craft/:id', async(req, res)=>{
+        const id = req.params.id;
+        const filter = {_id : new ObjectId(id)};
+        const options={upsert:true};
+        const updatedCraft = req.body;
+        const artsCraft = {
+            $set:{
+
+            }
+        };
+        const result = await artsCraftCollection.updateOne(filer, artsCraft, options);
+        res.send(result)
+    })
 
     app.get("/subcategory", async (req, res) => {
       const cursor = subcategoryCollection.find();
