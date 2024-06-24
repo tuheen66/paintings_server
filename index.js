@@ -42,6 +42,13 @@ async function run() {
       res.send(result);
     });
 
+    app.get("/arts-craft/:id", async (req, res) => {
+      const id = req.params.id;
+      const query = { _id: new ObjectId(id) };
+      const result = await artsCraftCollection.findOne(query);
+      res.send(result);
+    });
+
     app.post("/arts-craft", async (req, res) => {
       const artsCraft = req.body;
       console.log(artsCraft);
@@ -49,19 +56,31 @@ async function run() {
       res.send(result);
     });
 
-    app.put('/arts-craft/:id', async(req, res)=>{
-        const id = req.params.id;
-        const filter = {_id : new ObjectId(id)};
-        const options={upsert:true};
-        const updatedCraft = req.body;
-        const artsCraft = {
-            $set:{
-
-            }
-        };
-        const result = await artsCraftCollection.updateOne(filer, artsCraft, options);
-        res.send(result)
-    })
+    app.put("/arts-craft/:id", async (req, res) => {
+      const id = req.params.id;
+      const filter = { _id: new ObjectId(id) };
+      const options = { upsert: true };
+      const updatedCraft = req.body;
+      const artsCraft = {
+        $set: {
+          image: updatedCraft.image,
+          itemName: updatedCraft.itemName,
+          subcategoryName: updatedCraft.subcategoryName,
+          price: updatedCraft.price,
+          rating: updatedCraft.rating,
+          customization: updatedCraft.customization,
+          processingTime: updatedCraft.processingTime,
+          stockStatus: updatedCraft.stockStatus,
+          description: updatedCraft.description,
+        },
+      };
+      const result = await artsCraftCollection.updateOne(
+        filter,
+        artsCraft,
+        options
+      );
+      res.send(result);
+    });
 
     app.get("/subcategory", async (req, res) => {
       const cursor = subcategoryCollection.find();
