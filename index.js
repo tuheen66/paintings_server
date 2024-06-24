@@ -82,6 +82,15 @@ async function run() {
       res.send(result);
     });
 
+    app.delete('/art-craft/:id', async(req, res)=>{
+      const id = req.params.id;
+      const query = {_id : new ObjectId(id)}
+      const result = await artsCraftCollection.deleteOne()
+      res.send(result)
+    })
+
+//  subcategory api
+
     app.get("/subcategory", async (req, res) => {
       const cursor = subcategoryCollection.find();
       const result = await cursor.toArray();
